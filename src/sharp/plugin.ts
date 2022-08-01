@@ -9,9 +9,9 @@ export default function sharp() {
  
      configureServer(server) {
        server.middlewares.use(async (req, res, next) => {
-         if (req.url !== "/") {
-           return next();
-         }
+        //  if (req.url !== "/") {
+        //    return next();
+        //  }
  
          const { renderInNode } = await server.ssrLoadModule(
            path.resolve(__dirname, "./serverEntry.tsx")
@@ -31,7 +31,7 @@ export default function sharp() {
  
          const head = template.match(/<head>(.+?)<\/head>/s)[1];
  
-         return renderInNode({ res, head });
+         return renderInNode({ res, req, head });
        });
      },
    };

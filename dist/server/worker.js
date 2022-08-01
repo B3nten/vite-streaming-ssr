@@ -286,55 +286,6 @@ react_production_min.version = "18.2.0";
     module.exports = react_production_min;
   }
 })(react);
-var jsxRuntime = { exports: {} };
-var reactJsxRuntime_production_min = {};
-/**
- * @license React
- * react-jsx-runtime.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-var f = react.exports, k$1 = Symbol.for("react.element"), l$3 = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n$1 = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p$2 = { key: true, ref: true, __self: true, __source: true };
-function q(c, a, g) {
-  var b, d = {}, e = null, h = null;
-  void 0 !== g && (e = "" + g);
-  void 0 !== a.key && (e = "" + a.key);
-  void 0 !== a.ref && (h = a.ref);
-  for (b in a)
-    m.call(a, b) && !p$2.hasOwnProperty(b) && (d[b] = a[b]);
-  if (c && c.defaultProps)
-    for (b in a = c.defaultProps, a)
-      void 0 === d[b] && (d[b] = a[b]);
-  return { $$typeof: k$1, type: c, key: e, ref: h, props: d, _owner: n$1.current };
-}
-reactJsxRuntime_production_min.Fragment = l$3;
-reactJsxRuntime_production_min.jsx = q;
-reactJsxRuntime_production_min.jsxs = q;
-(function(module) {
-  {
-    module.exports = reactJsxRuntime_production_min;
-  }
-})(jsxRuntime);
-const jsx = jsxRuntime.exports.jsx;
-const jsxs = jsxRuntime.exports.jsxs;
-function _app({
-  children
-}) {
-  const [count, setCount] = react.exports.useState(0);
-  return /* @__PURE__ */ jsxs("div", {
-    children: [/* @__PURE__ */ jsxs("button", {
-      onClick: () => setCount(count + 1),
-      children: ["the count is ", count]
-    }), children]
-  });
-}
-const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: _app
-}, Symbol.toStringTag, { value: "Module" }));
 var Action;
 (function(Action2) {
   Action2["Pop"] = "POP";
@@ -929,8 +880,95 @@ function useLinkClickHandler(to, _temp) {
     }
   }, [location, navigate, path, replaceProp, state, target, to]);
 }
+var jsxRuntime = { exports: {} };
+var reactJsxRuntime_production_min = {};
+/**
+ * @license React
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var f = react.exports, k$1 = Symbol.for("react.element"), l$3 = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n$1 = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p$2 = { key: true, ref: true, __self: true, __source: true };
+function q(c, a, g) {
+  var b, d = {}, e = null, h = null;
+  void 0 !== g && (e = "" + g);
+  void 0 !== a.key && (e = "" + a.key);
+  void 0 !== a.ref && (h = a.ref);
+  for (b in a)
+    m.call(a, b) && !p$2.hasOwnProperty(b) && (d[b] = a[b]);
+  if (c && c.defaultProps)
+    for (b in a = c.defaultProps, a)
+      void 0 === d[b] && (d[b] = a[b]);
+  return { $$typeof: k$1, type: c, key: e, ref: h, props: d, _owner: n$1.current };
+}
+reactJsxRuntime_production_min.Fragment = l$3;
+reactJsxRuntime_production_min.jsx = q;
+reactJsxRuntime_production_min.jsxs = q;
+(function(module) {
+  {
+    module.exports = reactJsxRuntime_production_min;
+  }
+})(jsxRuntime);
+const jsx = jsxRuntime.exports.jsx;
+const jsxs = jsxRuntime.exports.jsxs;
+function middleware$1() {
+  return {
+    props: "hello"
+  };
+}
+function index$1({
+  props
+}) {
+  return /* @__PURE__ */ jsxs("div", {
+    children: ["about ", props, " ", /* @__PURE__ */ jsx(Link, {
+      to: "/",
+      children: "home"
+    })]
+  });
+}
+const __vite_glob_1_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  middleware: middleware$1,
+  default: index$1
+}, Symbol.toStringTag, { value: "Module" }));
+function middleware() {
+  return {
+    props: "INDEX PAGE"
+  };
+}
+function index() {
+  return /* @__PURE__ */ jsxs("div", {
+    children: ["home ", /* @__PURE__ */ jsx(Link, {
+      to: "/about",
+      children: "about"
+    })]
+  });
+}
+const __vite_glob_1_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  middleware,
+  default: index
+}, Symbol.toStringTag, { value: "Module" }));
+function _app({
+  children
+}) {
+  const [count, setCount] = react.exports.useState(0);
+  return /* @__PURE__ */ jsxs("div", {
+    children: [/* @__PURE__ */ jsxs("button", {
+      onClick: () => setCount(count + 1),
+      children: ["the count is ", count]
+    }), children]
+  });
+}
+const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: _app
+}, Symbol.toStringTag, { value: "Module" }));
 const PRESERVED = Object.assign({ "/src/routes/_app.tsx": __vite_glob_0_0 });
-const ROUTES = Object.assign({ "/src/routes/about/index.tsx": () => Promise.resolve().then(() => index$3), "/src/routes/index.tsx": () => Promise.resolve().then(() => index$1) });
+const ROUTES = Object.assign({ "/src/routes/about/index.tsx": () => Promise.resolve().then(() => __vite_glob_1_0), "/src/routes/index.tsx": () => Promise.resolve().then(() => __vite_glob_1_1) });
 const preserved = Object.keys(PRESERVED).reduce((preserved2, file) => {
   const key = file.replace(/\/src\/routes\/|\.tsx$/g, "");
   return {
@@ -944,6 +982,11 @@ const routes = Object.keys(ROUTES).map((route) => {
     path,
     component: react.exports.lazy(ROUTES[route])
   };
+});
+const routeMap = /* @__PURE__ */ new Map();
+Object.keys(ROUTES).map((route) => {
+  const path = route.replace(/\/src\/routes|index|\.tsx$/g, "").replace(/\[\.{3}.+\]/, "*").replace(/\[(.+)\]/, ":$1");
+  ROUTES[route]().then((module) => module.middleware).then((middleware2) => routeMap.set(path, middleware2));
 });
 function Main() {
   const App = (preserved == null ? void 0 : preserved["_app"]) || react.exports.Fragment;
@@ -4274,13 +4317,25 @@ function StaticRouter({
 }
 async function renderInWorker({
   head: head2,
-  res
+  req
 }) {
+  const ROUTES2 = Object.assign({ "/src/routes/about/index.tsx": __vite_glob_1_0, "/src/routes/index.tsx": __vite_glob_1_1 });
+  const routeMap2 = /* @__PURE__ */ new Map();
+  Object.keys(ROUTES2).map((route) => {
+    let path = route.replace(/\/src\/routes|index|\.tsx$/g, "").replace(/\[\.{3}.+\]/, "*").replace(/\[(.+)\]/, ":$1");
+    if (path.length > 1 && path.lastIndexOf("/") === path.length - 1) {
+      path = path.substring(0, path.length - 1);
+    }
+    routeMap2.set(path, ROUTES2[route].middleware);
+  });
+  const middleware2 = routeMap2.get(new URL(req.url).pathname);
+  const edgeProps = await (middleware2 == null ? void 0 : middleware2());
+  console.log(edgeProps);
   try {
     const stream = await renderToReadableStream(/* @__PURE__ */ jsx(HTML, {
       head: head2,
       children: /* @__PURE__ */ jsx(StaticRouter, {
-        location: res.url,
+        location: req.url,
         children: /* @__PURE__ */ jsx(Main, {})
       })
     }));
@@ -4298,7 +4353,7 @@ async function renderInWorker({
     });
   }
 }
-const template = '<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8" />\n    <link rel="icon" type="image/svg+xml" href="/vite.svg" />\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    <title>Vite + React + TS</title>\n    <script type="module" crossorigin src="/assets/index.7d0f5deb.js"><\/script>\n  </head>\n  <body>\n    <div id="root"></div>\n    \n  </body>\n</html>';
+const template = '<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8" />\n    <link rel="icon" type="image/svg+xml" href="/vite.svg" />\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    <title>Vite + React + TS</title>\n    <script type="module" crossorigin src="/assets/index.518ca478.js"><\/script>\n  </head>\n  <body>\n    <div id="root"></div>\n    \n  </body>\n</html>';
 var dist = {};
 function Mime$1() {
   this._types = /* @__PURE__ */ Object.create(null);
@@ -4606,7 +4661,7 @@ addEventListener("fetch", (event) => {
     return event.respondWith(assetHandler(event, url));
   }
   try {
-    event.respondWith(renderInWorker({ head, res: event.request }));
+    event.respondWith(renderInWorker({ head, req: event.request }));
   } catch (error) {
     event.respondWith(
       new Response(error.message, {
@@ -4615,35 +4670,3 @@ addEventListener("fetch", (event) => {
     );
   }
 });
-function middleware() {
-  return {
-    props: "hello"
-  };
-}
-function index$2({
-  props
-}) {
-  return /* @__PURE__ */ jsxs("div", {
-    children: ["about ", props, " ", /* @__PURE__ */ jsx(Link, {
-      to: "/",
-      children: "home"
-    })]
-  });
-}
-const index$3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  middleware,
-  default: index$2
-}, Symbol.toStringTag, { value: "Module" }));
-function index() {
-  return /* @__PURE__ */ jsxs("div", {
-    children: ["home ", /* @__PURE__ */ jsx(Link, {
-      to: "/about",
-      children: "about"
-    })]
-  });
-}
-const index$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: index
-}, Symbol.toStringTag, { value: "Module" }));

@@ -32,7 +32,7 @@ addEventListener('fetch', event => {
 	}
 
 	try {
-		event.respondWith(renderInWorker({ head, res: event.request }))
+		event.respondWith(renderInWorker({ head, req: event.request }))
 	} catch (error) {
 		event.respondWith(
 			new Response(error.message, {
