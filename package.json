@@ -1,0 +1,32 @@
+{
+  "name": "streaming",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build-worker": "npm run build:client && npm run build:worker",
+    "build-node": "npm run build:client && npm run build:node",
+    "build:client": "vite build --outDir dist/client",
+    "build:worker": "vite build --outDir dist/server --ssr /worker.js",
+    "build:node": "vite build --outDir dist/server --ssr src/sharp/serverEntry.tsx",
+    "preview": "vite preview",
+    "preview-worker": "miniflare dist/server/worker.js -s dist/client"
+  },
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.6.3",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.0",
+    "miniflare": "^2.6.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.0.0"
+  }
+}
