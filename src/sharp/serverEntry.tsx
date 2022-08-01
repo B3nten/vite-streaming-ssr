@@ -4,11 +4,8 @@ import { renderToPipeableStream, renderToReadableStream } from 'react-dom/server
 import { HTML } from './HTML'
 import { StaticRouter } from 'react-router-dom/server'
 
-export async function renderInNode({ req, head, res }) {
-
-	const ROUTES = import.meta.glob('/src/routes/**/[a-z[]*.tsx', { eager: true })
+const ROUTES = import.meta.glob('/src/routes/**/[a-z[]*.tsx', { eager: true })
 	const routeMap = new Map()
-
 	Object.keys(ROUTES).map(route => {
 		let path = route
 			.replace(/\/src\/routes|index|\.tsx$/g, '')
@@ -17,11 +14,13 @@ export async function renderInNode({ req, head, res }) {
 		if(path.length > 1 && path.lastIndexOf('/') === path.length - 1) {
 			path = path.substring(0, path.length - 1)
 		}
-		routeMap.set(path, ROUTES[route].middleware)
+		routeMap.set(path, {loader: ROUTES[route].loader, config: ROUTES[route].config})
 	})
 
-	const middleware = routeMap.get(req.url)
-	const edgeProps = await middleware?.()
+export async function renderInNode({ req, res, head }) {
+
+	const routeParams = routeMap.get(req.url)
+	const edgeProps = await routeParams?.loader?.()
 
 	const { pipe, abort } = renderToPipeableStream(
 		<HTML head={head}>
@@ -40,25 +39,11 @@ export async function renderInNode({ req, head, res }) {
 	setTimeout(abort, 10000)
 }
 
-export async function renderInWorker({ head, req }) {
+export async function renderInWorker({req, head }) {
 
-	const ROUTES = import.meta.glob('/src/routes/**/[a-z[]*.tsx', { eager: true })
-	const routeMap = new Map()
+	const routeParams = routeMap.get(new URL(req.url))
+	const edgeProps = await routeParams?.loader?.()
 
-	Object.keys(ROUTES).map(route => {
-		let path = route
-			.replace(/\/src\/routes|index|\.tsx$/g, '')
-			.replace(/\[\.{3}.+\]/, '*')
-			.replace(/\[(.+)\]/, ':$1')
-		if(path.length > 1 && path.lastIndexOf('/') === path.length - 1) {
-			path = path.substring(0, path.length - 1)
-		}
-		routeMap.set(path, ROUTES[route].middleware)
-	})
-
-	const middleware = routeMap.get(new URL(req.url).pathname)
-	const edgeProps = await middleware?.()
-	console.log(edgeProps)
 
 	try {
 		const stream = await renderToReadableStream(

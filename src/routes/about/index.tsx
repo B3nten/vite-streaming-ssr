@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 
-export function middleware(){
-   return {props: 'hello'}
+export function loader(){
+   return {props: 'about me! hehe hehe'} 
+}
+
+export const config = {
+   cache: true
 }
 
 export default function({props}){

@@ -9,9 +9,9 @@ export default function sharp() {
  
      configureServer(server) {
        server.middlewares.use(async (req, res, next) => {
-        //  if (req.url !== "/") {
-        //    return next();
-        //  }
+         if (req.url.startsWith("/@") || req.url.startsWith("/src") || req.url.startsWith("/node")) {
+           return next();
+         }
  
          const { renderInNode } = await server.ssrLoadModule(
            path.resolve(__dirname, "./serverEntry.tsx")

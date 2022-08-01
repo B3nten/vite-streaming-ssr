@@ -8,9 +8,9 @@ export default defineConfig({
   build: {
     minify: false,
   },
-  ssr: {
-    target: 'webworker',
-    noExternal: true
-  }
+  // ssr: {
+  //   target: 'webworker',
+  //   noExternal: true
+  // }
 
 })
