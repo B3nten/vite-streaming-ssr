@@ -4,7 +4,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 hydrateRoot(
-	document,
+	document.getElementById("blade"),
 	<React.StrictMode>
 		<BrowserRouter>
 			<Main />

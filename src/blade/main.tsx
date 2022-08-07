@@ -2,7 +2,7 @@
 import { Fragment, lazy, Suspense } from 'react'
 import { Routes as BrowserRoutes, Route } from 'react-router-dom'
 import { SWRConfig } from 'swr'
-import sheath from './sheath';
+import sheath from './sheath'
 
 const PRESERVED = import.meta.glob('/src/routes/(_app|404).tsx', { eager: true })
 const ROUTES = import.meta.glob('/src/routes/**/[a-z[]*.tsx')
@@ -33,24 +33,30 @@ Object.keys(ROUTES).map(route => {
 		.then(middleware => routeMap.set(path, middleware))
 })
 
-
-const options = (cache) => ({
+const options = cache => ({
 	provider: () => sheath(cache),
 	suspense: true,
- });
+})
 
-export function Main({cache}: {cache?: Cache}) {
+export function Main({ cache }: { cache?: Cache }) {
 	const App = preserved?.['_app'] || Fragment
 	const NotFound = preserved?.['404'] || Fragment
 
-
 	return (
 		<App>
-			<SWRConfig value={options(cache)}>
+			<SWRConfig value={{ provider: () => sheath(cache) }}>
 				<Suspense fallback={null}>
 					<BrowserRoutes>
 						{routes.map(({ path, component: Component = Fragment }) => (
-							<Route key={path} path={path} element={<Component />} />
+							<Route
+								key={path}
+								path={path}
+								element={
+									<Suspense>
+										<Component />
+									</Suspense>
+								}
+							/>
 						))}
 						<Route path='*' element={<NotFound />} />
 					</BrowserRoutes>
