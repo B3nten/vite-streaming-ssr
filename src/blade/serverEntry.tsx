@@ -28,8 +28,7 @@ export async function renderInNode({ req, res, head }) {
 			res.write(
 				`</div>
 				</body>
-				<script>self.__sheath = ${JSON.stringify(Array.from(cache.entries()))}</script>
-			 <script type='module' src='src/blade/clientEntry.tsx'></script>`
+				<script>self.__sheath = ${JSON.stringify(Array.from(cache.entries()))}</script>`
 			)
 			res.end('</html>')
 		},
@@ -40,12 +39,14 @@ export async function renderInNode({ req, res, head }) {
 			<Main cache={cache} />
 		</StaticRouter>,
 		{
+			bootstrapModules: ['src/blade/clientEntry.tsx'],
 			onShellReady() {
 				res.write(`
 				<!DOCTYPE html>
 				<html>
 				<head>
 				${head}
+
 				`)
 				res.write(`</head>
 				<body>

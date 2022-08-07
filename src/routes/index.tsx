@@ -1,8 +1,7 @@
-import { Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import useSWR from 'swr'
 
-export default function Home () {
+export default function Home() {
 	const fetcher = async () => {
 		const comments = await new Promise((resolve, reject) => {
 			setTimeout(() => {
@@ -14,16 +13,16 @@ export default function Home () {
 			}, 2000)
 		})
 		return { comments }
+		// const res = await fetch('https://jsonplaceholder.typicode.com/comments')
+		// return res.json()
 	}
 
 	const data = useSWR('testfunction', fetcher, { suspense: true })
 
 	return (
-		<Suspense>
-			<div>
-				home <Link to='/about'>about</Link>
-				<div>LOADER PROPS: {JSON.stringify(data)}</div>
-			</div>
-		</Suspense>
+		<div>
+			home <Link to='/about'>about</Link>
+			<div>LOADER PROPS: {JSON.stringify(data)}</div>
+		</div>
 	)
 }

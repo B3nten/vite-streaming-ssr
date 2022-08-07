@@ -1,8 +1,10 @@
 // @ts-nocheck
 import { Fragment, lazy, Suspense } from 'react'
 import { Routes as BrowserRoutes, Route } from 'react-router-dom'
-import { SWRConfig } from 'swr'
-import sheath from './sheath'
+import { SWRConfig, SWRConfiguration } from 'swr'
+import sheath from './sheath' 
+import {ErrorBoundary} from './ErrorBoundary'
+
 
 const PRESERVED = import.meta.glob('/src/routes/(_app|404).tsx', { eager: true })
 const ROUTES = import.meta.glob('/src/routes/**/[a-z[]*.tsx')
@@ -33,9 +35,10 @@ Object.keys(ROUTES).map(route => {
 		.then(middleware => routeMap.set(path, middleware))
 })
 
-const options = cache => ({
+const options: SWRConfiguration = cache => ({
 	provider: () => sheath(cache),
 	suspense: true,
+
 })
 
 export function Main({ cache }: { cache?: Cache }) {
@@ -43,7 +46,8 @@ export function Main({ cache }: { cache?: Cache }) {
 	const NotFound = preserved?.['404'] || Fragment
 	return (
 		<App>
-			<SWRConfig value={{ provider: () => sheath(cache) }}>
+			<SWRConfig value={options(cache)}>
+				<ErrorBoundary>
 				<Suspense fallback={<div>loading...</div>}>
 					<BrowserRoutes>
 						{routes.map(({ path, component: Component = Fragment }) => (
@@ -60,6 +64,7 @@ export function Main({ cache }: { cache?: Cache }) {
 						<Route path='*' element={<NotFound />} />
 					</BrowserRoutes>
 				</Suspense>
+				</ErrorBoundary>
 			</SWRConfig>
 		</App>
 	)
