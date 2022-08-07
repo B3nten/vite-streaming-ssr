@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import sharp from './src/sharp/plugin'
 
 import { Project } from 'ts-morph'
+import blade from './src/blade/plugin';
 
 const project = new Project({
 	tsConfigFilePath: './tsconfig.json',
@@ -33,7 +33,7 @@ const project = new Project({
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), sharp()],
+	plugins: [react(), blade()],
 	build: {
 		minify: false,
 	},

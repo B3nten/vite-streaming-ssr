@@ -4,9 +4,9 @@ import { promises as fs } from "fs";
 
 
 
-export default function sharp() {
+export default function blade() {
    return {
-     name: "sharpPlugin",
+     name: "bladessr",
 
      configureServer(server) {
        server.middlewares.use(async (req, res, next) => {
