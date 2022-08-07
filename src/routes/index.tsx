@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-export function loader(){
-   return {props: 'HOME PAGE'} 
-}
+export default function () {
 
-export const config = {
-   cache: true
-}
-export default function(){
-
-   return <div>home <Link to='/about'>about</Link></div>
+	return (
+		<div>
+			home <Link to='/about'>about</Link>
+			<div>
+            LOADER PROPS: 
+         </div>
+		</div>
+	)
 }

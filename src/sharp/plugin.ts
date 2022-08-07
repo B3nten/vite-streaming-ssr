@@ -1,15 +1,16 @@
 //@ts-nocheck
-
 import path from "path";
 import { promises as fs } from "fs";
+
+
 
 export default function sharp() {
    return {
      name: "sharpPlugin",
- 
+
      configureServer(server) {
        server.middlewares.use(async (req, res, next) => {
-         if (req.url.startsWith("/@") || req.url.startsWith("/src") || req.url.startsWith("/node")) {
+         if (req.url.startsWith("/@") || req.url.startsWith("/src") || req.url.startsWith("/node") ||req.url.startsWith("/vite") ) {
            return next();
          }
  

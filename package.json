@@ -15,17 +15,23 @@
   },
   "dependencies": {
     "@cloudflare/kv-asset-handler": "^0.2.0",
+    "lodash.map": "^4.6.0",
+    "node-fetch": "^3.2.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.3.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "recast": "^0.21.1",
+    "swr": "^1.3.0"
   },
   "devDependencies": {
+    "@types/lodash.map": "^4.6.13",
     "@types/node": "^18.6.3",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
     "miniflare": "^2.6.0",
+    "ts-morph": "^15.1.0",
     "typescript": "^4.6.4",
     "vite": "^3.0.0"
   }

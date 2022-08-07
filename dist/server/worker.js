@@ -1,3 +1,4 @@
+var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 var react = { exports: {} };
 var react_production_min = {};
 /**
@@ -914,42 +915,879 @@ reactJsxRuntime_production_min.jsxs = q;
 })(jsxRuntime);
 const jsx = jsxRuntime.exports.jsx;
 const jsxs = jsxRuntime.exports.jsxs;
-function middleware$1() {
+let data;
+const SheathContext = react.exports.createContext(null);
+function useLoader() {
+  const ctx = react.exports.useContext(SheathContext);
+  if (ctx) {
+    data = ctx;
+  } else {
+    data = window.sheath;
+  }
+  return data;
+}
+var lodash_map = { exports: {} };
+(function(module, exports) {
+  var LARGE_ARRAY_SIZE = 200;
+  var FUNC_ERROR_TEXT = "Expected a function";
+  var HASH_UNDEFINED = "__lodash_hash_undefined__";
+  var UNORDERED_COMPARE_FLAG = 1, PARTIAL_COMPARE_FLAG = 2;
+  var INFINITY = 1 / 0, MAX_SAFE_INTEGER = 9007199254740991;
+  var argsTag = "[object Arguments]", arrayTag = "[object Array]", boolTag = "[object Boolean]", dateTag = "[object Date]", errorTag = "[object Error]", funcTag = "[object Function]", genTag = "[object GeneratorFunction]", mapTag = "[object Map]", numberTag = "[object Number]", objectTag = "[object Object]", promiseTag = "[object Promise]", regexpTag = "[object RegExp]", setTag = "[object Set]", stringTag = "[object String]", symbolTag = "[object Symbol]", weakMapTag = "[object WeakMap]";
+  var arrayBufferTag = "[object ArrayBuffer]", dataViewTag = "[object DataView]", float32Tag = "[object Float32Array]", float64Tag = "[object Float64Array]", int8Tag = "[object Int8Array]", int16Tag = "[object Int16Array]", int32Tag = "[object Int32Array]", uint8Tag = "[object Uint8Array]", uint8ClampedTag = "[object Uint8ClampedArray]", uint16Tag = "[object Uint16Array]", uint32Tag = "[object Uint32Array]";
+  var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/, reIsPlainProp = /^\w*$/, reLeadingDot = /^\./, rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+  var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+  var reEscapeChar = /\\(\\)?/g;
+  var reIsHostCtor = /^\[object .+?Constructor\]$/;
+  var reIsUint = /^(?:0|[1-9]\d*)$/;
+  var typedArrayTags = {};
+  typedArrayTags[float32Tag] = typedArrayTags[float64Tag] = typedArrayTags[int8Tag] = typedArrayTags[int16Tag] = typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] = typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] = typedArrayTags[uint32Tag] = true;
+  typedArrayTags[argsTag] = typedArrayTags[arrayTag] = typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] = typedArrayTags[dataViewTag] = typedArrayTags[dateTag] = typedArrayTags[errorTag] = typedArrayTags[funcTag] = typedArrayTags[mapTag] = typedArrayTags[numberTag] = typedArrayTags[objectTag] = typedArrayTags[regexpTag] = typedArrayTags[setTag] = typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
+  var freeGlobal = typeof commonjsGlobal == "object" && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  var freeSelf = typeof self == "object" && self && self.Object === Object && self;
+  var root = freeGlobal || freeSelf || Function("return this")();
+  var freeExports = exports && !exports.nodeType && exports;
+  var freeModule = freeExports && true && module && !module.nodeType && module;
+  var moduleExports = freeModule && freeModule.exports === freeExports;
+  var freeProcess = moduleExports && freeGlobal.process;
+  var nodeUtil = function() {
+    try {
+      return freeProcess && freeProcess.binding("util");
+    } catch (e) {
+    }
+  }();
+  var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+  function arrayMap(array, iteratee) {
+    var index2 = -1, length = array ? array.length : 0, result = Array(length);
+    while (++index2 < length) {
+      result[index2] = iteratee(array[index2], index2, array);
+    }
+    return result;
+  }
+  function arraySome(array, predicate) {
+    var index2 = -1, length = array ? array.length : 0;
+    while (++index2 < length) {
+      if (predicate(array[index2], index2, array)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function baseProperty(key) {
+    return function(object) {
+      return object == null ? void 0 : object[key];
+    };
+  }
+  function baseTimes(n2, iteratee) {
+    var index2 = -1, result = Array(n2);
+    while (++index2 < n2) {
+      result[index2] = iteratee(index2);
+    }
+    return result;
+  }
+  function baseUnary(func) {
+    return function(value) {
+      return func(value);
+    };
+  }
+  function getValue(object, key) {
+    return object == null ? void 0 : object[key];
+  }
+  function isHostObject(value) {
+    var result = false;
+    if (value != null && typeof value.toString != "function") {
+      try {
+        result = !!(value + "");
+      } catch (e) {
+      }
+    }
+    return result;
+  }
+  function mapToArray(map3) {
+    var index2 = -1, result = Array(map3.size);
+    map3.forEach(function(value, key) {
+      result[++index2] = [key, value];
+    });
+    return result;
+  }
+  function overArg(func, transform) {
+    return function(arg) {
+      return func(transform(arg));
+    };
+  }
+  function setToArray(set) {
+    var index2 = -1, result = Array(set.size);
+    set.forEach(function(value) {
+      result[++index2] = value;
+    });
+    return result;
+  }
+  var arrayProto = Array.prototype, funcProto = Function.prototype, objectProto = Object.prototype;
+  var coreJsData = root["__core-js_shared__"];
+  var maskSrcKey = function() {
+    var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
+    return uid ? "Symbol(src)_1." + uid : "";
+  }();
+  var funcToString = funcProto.toString;
+  var hasOwnProperty = objectProto.hasOwnProperty;
+  var objectToString = objectProto.toString;
+  var reIsNative = RegExp(
+    "^" + funcToString.call(hasOwnProperty).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$"
+  );
+  var Symbol2 = root.Symbol, Uint8Array2 = root.Uint8Array, propertyIsEnumerable = objectProto.propertyIsEnumerable, splice = arrayProto.splice;
+  var nativeKeys = overArg(Object.keys, Object);
+  var DataView = getNative(root, "DataView"), Map2 = getNative(root, "Map"), Promise2 = getNative(root, "Promise"), Set2 = getNative(root, "Set"), WeakMap = getNative(root, "WeakMap"), nativeCreate = getNative(Object, "create");
+  var dataViewCtorString = toSource(DataView), mapCtorString = toSource(Map2), promiseCtorString = toSource(Promise2), setCtorString = toSource(Set2), weakMapCtorString = toSource(WeakMap);
+  var symbolProto = Symbol2 ? Symbol2.prototype : void 0, symbolValueOf = symbolProto ? symbolProto.valueOf : void 0, symbolToString = symbolProto ? symbolProto.toString : void 0;
+  function Hash(entries) {
+    var index2 = -1, length = entries ? entries.length : 0;
+    this.clear();
+    while (++index2 < length) {
+      var entry = entries[index2];
+      this.set(entry[0], entry[1]);
+    }
+  }
+  function hashClear() {
+    this.__data__ = nativeCreate ? nativeCreate(null) : {};
+  }
+  function hashDelete(key) {
+    return this.has(key) && delete this.__data__[key];
+  }
+  function hashGet(key) {
+    var data2 = this.__data__;
+    if (nativeCreate) {
+      var result = data2[key];
+      return result === HASH_UNDEFINED ? void 0 : result;
+    }
+    return hasOwnProperty.call(data2, key) ? data2[key] : void 0;
+  }
+  function hashHas(key) {
+    var data2 = this.__data__;
+    return nativeCreate ? data2[key] !== void 0 : hasOwnProperty.call(data2, key);
+  }
+  function hashSet(key, value) {
+    var data2 = this.__data__;
+    data2[key] = nativeCreate && value === void 0 ? HASH_UNDEFINED : value;
+    return this;
+  }
+  Hash.prototype.clear = hashClear;
+  Hash.prototype["delete"] = hashDelete;
+  Hash.prototype.get = hashGet;
+  Hash.prototype.has = hashHas;
+  Hash.prototype.set = hashSet;
+  function ListCache(entries) {
+    var index2 = -1, length = entries ? entries.length : 0;
+    this.clear();
+    while (++index2 < length) {
+      var entry = entries[index2];
+      this.set(entry[0], entry[1]);
+    }
+  }
+  function listCacheClear() {
+    this.__data__ = [];
+  }
+  function listCacheDelete(key) {
+    var data2 = this.__data__, index2 = assocIndexOf(data2, key);
+    if (index2 < 0) {
+      return false;
+    }
+    var lastIndex = data2.length - 1;
+    if (index2 == lastIndex) {
+      data2.pop();
+    } else {
+      splice.call(data2, index2, 1);
+    }
+    return true;
+  }
+  function listCacheGet(key) {
+    var data2 = this.__data__, index2 = assocIndexOf(data2, key);
+    return index2 < 0 ? void 0 : data2[index2][1];
+  }
+  function listCacheHas(key) {
+    return assocIndexOf(this.__data__, key) > -1;
+  }
+  function listCacheSet(key, value) {
+    var data2 = this.__data__, index2 = assocIndexOf(data2, key);
+    if (index2 < 0) {
+      data2.push([key, value]);
+    } else {
+      data2[index2][1] = value;
+    }
+    return this;
+  }
+  ListCache.prototype.clear = listCacheClear;
+  ListCache.prototype["delete"] = listCacheDelete;
+  ListCache.prototype.get = listCacheGet;
+  ListCache.prototype.has = listCacheHas;
+  ListCache.prototype.set = listCacheSet;
+  function MapCache(entries) {
+    var index2 = -1, length = entries ? entries.length : 0;
+    this.clear();
+    while (++index2 < length) {
+      var entry = entries[index2];
+      this.set(entry[0], entry[1]);
+    }
+  }
+  function mapCacheClear() {
+    this.__data__ = {
+      "hash": new Hash(),
+      "map": new (Map2 || ListCache)(),
+      "string": new Hash()
+    };
+  }
+  function mapCacheDelete(key) {
+    return getMapData(this, key)["delete"](key);
+  }
+  function mapCacheGet(key) {
+    return getMapData(this, key).get(key);
+  }
+  function mapCacheHas(key) {
+    return getMapData(this, key).has(key);
+  }
+  function mapCacheSet(key, value) {
+    getMapData(this, key).set(key, value);
+    return this;
+  }
+  MapCache.prototype.clear = mapCacheClear;
+  MapCache.prototype["delete"] = mapCacheDelete;
+  MapCache.prototype.get = mapCacheGet;
+  MapCache.prototype.has = mapCacheHas;
+  MapCache.prototype.set = mapCacheSet;
+  function SetCache(values) {
+    var index2 = -1, length = values ? values.length : 0;
+    this.__data__ = new MapCache();
+    while (++index2 < length) {
+      this.add(values[index2]);
+    }
+  }
+  function setCacheAdd(value) {
+    this.__data__.set(value, HASH_UNDEFINED);
+    return this;
+  }
+  function setCacheHas(value) {
+    return this.__data__.has(value);
+  }
+  SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
+  SetCache.prototype.has = setCacheHas;
+  function Stack(entries) {
+    this.__data__ = new ListCache(entries);
+  }
+  function stackClear() {
+    this.__data__ = new ListCache();
+  }
+  function stackDelete(key) {
+    return this.__data__["delete"](key);
+  }
+  function stackGet(key) {
+    return this.__data__.get(key);
+  }
+  function stackHas(key) {
+    return this.__data__.has(key);
+  }
+  function stackSet(key, value) {
+    var cache = this.__data__;
+    if (cache instanceof ListCache) {
+      var pairs = cache.__data__;
+      if (!Map2 || pairs.length < LARGE_ARRAY_SIZE - 1) {
+        pairs.push([key, value]);
+        return this;
+      }
+      cache = this.__data__ = new MapCache(pairs);
+    }
+    cache.set(key, value);
+    return this;
+  }
+  Stack.prototype.clear = stackClear;
+  Stack.prototype["delete"] = stackDelete;
+  Stack.prototype.get = stackGet;
+  Stack.prototype.has = stackHas;
+  Stack.prototype.set = stackSet;
+  function arrayLikeKeys(value, inherited) {
+    var result = isArray(value) || isArguments(value) ? baseTimes(value.length, String) : [];
+    var length = result.length, skipIndexes = !!length;
+    for (var key in value) {
+      if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == "length" || isIndex(key, length)))) {
+        result.push(key);
+      }
+    }
+    return result;
+  }
+  function assocIndexOf(array, key) {
+    var length = array.length;
+    while (length--) {
+      if (eq(array[length][0], key)) {
+        return length;
+      }
+    }
+    return -1;
+  }
+  var baseEach = createBaseEach(baseForOwn);
+  var baseFor = createBaseFor();
+  function baseForOwn(object, iteratee) {
+    return object && baseFor(object, iteratee, keys);
+  }
+  function baseGet(object, path) {
+    path = isKey(path, object) ? [path] : castPath(path);
+    var index2 = 0, length = path.length;
+    while (object != null && index2 < length) {
+      object = object[toKey(path[index2++])];
+    }
+    return index2 && index2 == length ? object : void 0;
+  }
+  function baseGetTag(value) {
+    return objectToString.call(value);
+  }
+  function baseHasIn(object, key) {
+    return object != null && key in Object(object);
+  }
+  function baseIsEqual(value, other2, customizer, bitmask, stack) {
+    if (value === other2) {
+      return true;
+    }
+    if (value == null || other2 == null || !isObject(value) && !isObjectLike(other2)) {
+      return value !== value && other2 !== other2;
+    }
+    return baseIsEqualDeep(value, other2, baseIsEqual, customizer, bitmask, stack);
+  }
+  function baseIsEqualDeep(object, other2, equalFunc, customizer, bitmask, stack) {
+    var objIsArr = isArray(object), othIsArr = isArray(other2), objTag = arrayTag, othTag = arrayTag;
+    if (!objIsArr) {
+      objTag = getTag(object);
+      objTag = objTag == argsTag ? objectTag : objTag;
+    }
+    if (!othIsArr) {
+      othTag = getTag(other2);
+      othTag = othTag == argsTag ? objectTag : othTag;
+    }
+    var objIsObj = objTag == objectTag && !isHostObject(object), othIsObj = othTag == objectTag && !isHostObject(other2), isSameTag = objTag == othTag;
+    if (isSameTag && !objIsObj) {
+      stack || (stack = new Stack());
+      return objIsArr || isTypedArray(object) ? equalArrays(object, other2, equalFunc, customizer, bitmask, stack) : equalByTag(object, other2, objTag, equalFunc, customizer, bitmask, stack);
+    }
+    if (!(bitmask & PARTIAL_COMPARE_FLAG)) {
+      var objIsWrapped = objIsObj && hasOwnProperty.call(object, "__wrapped__"), othIsWrapped = othIsObj && hasOwnProperty.call(other2, "__wrapped__");
+      if (objIsWrapped || othIsWrapped) {
+        var objUnwrapped = objIsWrapped ? object.value() : object, othUnwrapped = othIsWrapped ? other2.value() : other2;
+        stack || (stack = new Stack());
+        return equalFunc(objUnwrapped, othUnwrapped, customizer, bitmask, stack);
+      }
+    }
+    if (!isSameTag) {
+      return false;
+    }
+    stack || (stack = new Stack());
+    return equalObjects(object, other2, equalFunc, customizer, bitmask, stack);
+  }
+  function baseIsMatch(object, source, matchData, customizer) {
+    var index2 = matchData.length, length = index2, noCustomizer = !customizer;
+    if (object == null) {
+      return !length;
+    }
+    object = Object(object);
+    while (index2--) {
+      var data2 = matchData[index2];
+      if (noCustomizer && data2[2] ? data2[1] !== object[data2[0]] : !(data2[0] in object)) {
+        return false;
+      }
+    }
+    while (++index2 < length) {
+      data2 = matchData[index2];
+      var key = data2[0], objValue = object[key], srcValue = data2[1];
+      if (noCustomizer && data2[2]) {
+        if (objValue === void 0 && !(key in object)) {
+          return false;
+        }
+      } else {
+        var stack = new Stack();
+        if (customizer) {
+          var result = customizer(objValue, srcValue, key, object, source, stack);
+        }
+        if (!(result === void 0 ? baseIsEqual(srcValue, objValue, customizer, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG, stack) : result)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  function baseIsNative(value) {
+    if (!isObject(value) || isMasked(value)) {
+      return false;
+    }
+    var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
+    return pattern.test(toSource(value));
+  }
+  function baseIsTypedArray(value) {
+    return isObjectLike(value) && isLength(value.length) && !!typedArrayTags[objectToString.call(value)];
+  }
+  function baseIteratee(value) {
+    if (typeof value == "function") {
+      return value;
+    }
+    if (value == null) {
+      return identity;
+    }
+    if (typeof value == "object") {
+      return isArray(value) ? baseMatchesProperty(value[0], value[1]) : baseMatches(value);
+    }
+    return property(value);
+  }
+  function baseKeys(object) {
+    if (!isPrototype(object)) {
+      return nativeKeys(object);
+    }
+    var result = [];
+    for (var key in Object(object)) {
+      if (hasOwnProperty.call(object, key) && key != "constructor") {
+        result.push(key);
+      }
+    }
+    return result;
+  }
+  function baseMap(collection, iteratee) {
+    var index2 = -1, result = isArrayLike(collection) ? Array(collection.length) : [];
+    baseEach(collection, function(value, key, collection2) {
+      result[++index2] = iteratee(value, key, collection2);
+    });
+    return result;
+  }
+  function baseMatches(source) {
+    var matchData = getMatchData(source);
+    if (matchData.length == 1 && matchData[0][2]) {
+      return matchesStrictComparable(matchData[0][0], matchData[0][1]);
+    }
+    return function(object) {
+      return object === source || baseIsMatch(object, source, matchData);
+    };
+  }
+  function baseMatchesProperty(path, srcValue) {
+    if (isKey(path) && isStrictComparable(srcValue)) {
+      return matchesStrictComparable(toKey(path), srcValue);
+    }
+    return function(object) {
+      var objValue = get(object, path);
+      return objValue === void 0 && objValue === srcValue ? hasIn(object, path) : baseIsEqual(srcValue, objValue, void 0, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG);
+    };
+  }
+  function basePropertyDeep(path) {
+    return function(object) {
+      return baseGet(object, path);
+    };
+  }
+  function baseToString(value) {
+    if (typeof value == "string") {
+      return value;
+    }
+    if (isSymbol(value)) {
+      return symbolToString ? symbolToString.call(value) : "";
+    }
+    var result = value + "";
+    return result == "0" && 1 / value == -INFINITY ? "-0" : result;
+  }
+  function castPath(value) {
+    return isArray(value) ? value : stringToPath(value);
+  }
+  function createBaseEach(eachFunc, fromRight) {
+    return function(collection, iteratee) {
+      if (collection == null) {
+        return collection;
+      }
+      if (!isArrayLike(collection)) {
+        return eachFunc(collection, iteratee);
+      }
+      var length = collection.length, index2 = fromRight ? length : -1, iterable = Object(collection);
+      while (fromRight ? index2-- : ++index2 < length) {
+        if (iteratee(iterable[index2], index2, iterable) === false) {
+          break;
+        }
+      }
+      return collection;
+    };
+  }
+  function createBaseFor(fromRight) {
+    return function(object, iteratee, keysFunc) {
+      var index2 = -1, iterable = Object(object), props = keysFunc(object), length = props.length;
+      while (length--) {
+        var key = props[fromRight ? length : ++index2];
+        if (iteratee(iterable[key], key, iterable) === false) {
+          break;
+        }
+      }
+      return object;
+    };
+  }
+  function equalArrays(array, other2, equalFunc, customizer, bitmask, stack) {
+    var isPartial = bitmask & PARTIAL_COMPARE_FLAG, arrLength = array.length, othLength = other2.length;
+    if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
+      return false;
+    }
+    var stacked = stack.get(array);
+    if (stacked && stack.get(other2)) {
+      return stacked == other2;
+    }
+    var index2 = -1, result = true, seen = bitmask & UNORDERED_COMPARE_FLAG ? new SetCache() : void 0;
+    stack.set(array, other2);
+    stack.set(other2, array);
+    while (++index2 < arrLength) {
+      var arrValue = array[index2], othValue = other2[index2];
+      if (customizer) {
+        var compared = isPartial ? customizer(othValue, arrValue, index2, other2, array, stack) : customizer(arrValue, othValue, index2, array, other2, stack);
+      }
+      if (compared !== void 0) {
+        if (compared) {
+          continue;
+        }
+        result = false;
+        break;
+      }
+      if (seen) {
+        if (!arraySome(other2, function(othValue2, othIndex) {
+          if (!seen.has(othIndex) && (arrValue === othValue2 || equalFunc(arrValue, othValue2, customizer, bitmask, stack))) {
+            return seen.add(othIndex);
+          }
+        })) {
+          result = false;
+          break;
+        }
+      } else if (!(arrValue === othValue || equalFunc(arrValue, othValue, customizer, bitmask, stack))) {
+        result = false;
+        break;
+      }
+    }
+    stack["delete"](array);
+    stack["delete"](other2);
+    return result;
+  }
+  function equalByTag(object, other2, tag, equalFunc, customizer, bitmask, stack) {
+    switch (tag) {
+      case dataViewTag:
+        if (object.byteLength != other2.byteLength || object.byteOffset != other2.byteOffset) {
+          return false;
+        }
+        object = object.buffer;
+        other2 = other2.buffer;
+      case arrayBufferTag:
+        if (object.byteLength != other2.byteLength || !equalFunc(new Uint8Array2(object), new Uint8Array2(other2))) {
+          return false;
+        }
+        return true;
+      case boolTag:
+      case dateTag:
+      case numberTag:
+        return eq(+object, +other2);
+      case errorTag:
+        return object.name == other2.name && object.message == other2.message;
+      case regexpTag:
+      case stringTag:
+        return object == other2 + "";
+      case mapTag:
+        var convert = mapToArray;
+      case setTag:
+        var isPartial = bitmask & PARTIAL_COMPARE_FLAG;
+        convert || (convert = setToArray);
+        if (object.size != other2.size && !isPartial) {
+          return false;
+        }
+        var stacked = stack.get(object);
+        if (stacked) {
+          return stacked == other2;
+        }
+        bitmask |= UNORDERED_COMPARE_FLAG;
+        stack.set(object, other2);
+        var result = equalArrays(convert(object), convert(other2), equalFunc, customizer, bitmask, stack);
+        stack["delete"](object);
+        return result;
+      case symbolTag:
+        if (symbolValueOf) {
+          return symbolValueOf.call(object) == symbolValueOf.call(other2);
+        }
+    }
+    return false;
+  }
+  function equalObjects(object, other2, equalFunc, customizer, bitmask, stack) {
+    var isPartial = bitmask & PARTIAL_COMPARE_FLAG, objProps = keys(object), objLength = objProps.length, othProps = keys(other2), othLength = othProps.length;
+    if (objLength != othLength && !isPartial) {
+      return false;
+    }
+    var index2 = objLength;
+    while (index2--) {
+      var key = objProps[index2];
+      if (!(isPartial ? key in other2 : hasOwnProperty.call(other2, key))) {
+        return false;
+      }
+    }
+    var stacked = stack.get(object);
+    if (stacked && stack.get(other2)) {
+      return stacked == other2;
+    }
+    var result = true;
+    stack.set(object, other2);
+    stack.set(other2, object);
+    var skipCtor = isPartial;
+    while (++index2 < objLength) {
+      key = objProps[index2];
+      var objValue = object[key], othValue = other2[key];
+      if (customizer) {
+        var compared = isPartial ? customizer(othValue, objValue, key, other2, object, stack) : customizer(objValue, othValue, key, object, other2, stack);
+      }
+      if (!(compared === void 0 ? objValue === othValue || equalFunc(objValue, othValue, customizer, bitmask, stack) : compared)) {
+        result = false;
+        break;
+      }
+      skipCtor || (skipCtor = key == "constructor");
+    }
+    if (result && !skipCtor) {
+      var objCtor = object.constructor, othCtor = other2.constructor;
+      if (objCtor != othCtor && ("constructor" in object && "constructor" in other2) && !(typeof objCtor == "function" && objCtor instanceof objCtor && typeof othCtor == "function" && othCtor instanceof othCtor)) {
+        result = false;
+      }
+    }
+    stack["delete"](object);
+    stack["delete"](other2);
+    return result;
+  }
+  function getMapData(map3, key) {
+    var data2 = map3.__data__;
+    return isKeyable(key) ? data2[typeof key == "string" ? "string" : "hash"] : data2.map;
+  }
+  function getMatchData(object) {
+    var result = keys(object), length = result.length;
+    while (length--) {
+      var key = result[length], value = object[key];
+      result[length] = [key, value, isStrictComparable(value)];
+    }
+    return result;
+  }
+  function getNative(object, key) {
+    var value = getValue(object, key);
+    return baseIsNative(value) ? value : void 0;
+  }
+  var getTag = baseGetTag;
+  if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map2 && getTag(new Map2()) != mapTag || Promise2 && getTag(Promise2.resolve()) != promiseTag || Set2 && getTag(new Set2()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
+    getTag = function(value) {
+      var result = objectToString.call(value), Ctor = result == objectTag ? value.constructor : void 0, ctorString = Ctor ? toSource(Ctor) : void 0;
+      if (ctorString) {
+        switch (ctorString) {
+          case dataViewCtorString:
+            return dataViewTag;
+          case mapCtorString:
+            return mapTag;
+          case promiseCtorString:
+            return promiseTag;
+          case setCtorString:
+            return setTag;
+          case weakMapCtorString:
+            return weakMapTag;
+        }
+      }
+      return result;
+    };
+  }
+  function hasPath(object, path, hasFunc) {
+    path = isKey(path, object) ? [path] : castPath(path);
+    var result, index2 = -1, length = path.length;
+    while (++index2 < length) {
+      var key = toKey(path[index2]);
+      if (!(result = object != null && hasFunc(object, key))) {
+        break;
+      }
+      object = object[key];
+    }
+    if (result) {
+      return result;
+    }
+    var length = object ? object.length : 0;
+    return !!length && isLength(length) && isIndex(key, length) && (isArray(object) || isArguments(object));
+  }
+  function isIndex(value, length) {
+    length = length == null ? MAX_SAFE_INTEGER : length;
+    return !!length && (typeof value == "number" || reIsUint.test(value)) && (value > -1 && value % 1 == 0 && value < length);
+  }
+  function isKey(value, object) {
+    if (isArray(value)) {
+      return false;
+    }
+    var type = typeof value;
+    if (type == "number" || type == "symbol" || type == "boolean" || value == null || isSymbol(value)) {
+      return true;
+    }
+    return reIsPlainProp.test(value) || !reIsDeepProp.test(value) || object != null && value in Object(object);
+  }
+  function isKeyable(value) {
+    var type = typeof value;
+    return type == "string" || type == "number" || type == "symbol" || type == "boolean" ? value !== "__proto__" : value === null;
+  }
+  function isMasked(func) {
+    return !!maskSrcKey && maskSrcKey in func;
+  }
+  function isPrototype(value) {
+    var Ctor = value && value.constructor, proto = typeof Ctor == "function" && Ctor.prototype || objectProto;
+    return value === proto;
+  }
+  function isStrictComparable(value) {
+    return value === value && !isObject(value);
+  }
+  function matchesStrictComparable(key, srcValue) {
+    return function(object) {
+      if (object == null) {
+        return false;
+      }
+      return object[key] === srcValue && (srcValue !== void 0 || key in Object(object));
+    };
+  }
+  var stringToPath = memoize(function(string) {
+    string = toString(string);
+    var result = [];
+    if (reLeadingDot.test(string)) {
+      result.push("");
+    }
+    string.replace(rePropName, function(match, number, quote, string2) {
+      result.push(quote ? string2.replace(reEscapeChar, "$1") : number || match);
+    });
+    return result;
+  });
+  function toKey(value) {
+    if (typeof value == "string" || isSymbol(value)) {
+      return value;
+    }
+    var result = value + "";
+    return result == "0" && 1 / value == -INFINITY ? "-0" : result;
+  }
+  function toSource(func) {
+    if (func != null) {
+      try {
+        return funcToString.call(func);
+      } catch (e) {
+      }
+      try {
+        return func + "";
+      } catch (e) {
+      }
+    }
+    return "";
+  }
+  function map2(collection, iteratee) {
+    var func = isArray(collection) ? arrayMap : baseMap;
+    return func(collection, baseIteratee(iteratee));
+  }
+  function memoize(func, resolver) {
+    if (typeof func != "function" || resolver && typeof resolver != "function") {
+      throw new TypeError(FUNC_ERROR_TEXT);
+    }
+    var memoized = function() {
+      var args = arguments, key = resolver ? resolver.apply(this, args) : args[0], cache = memoized.cache;
+      if (cache.has(key)) {
+        return cache.get(key);
+      }
+      var result = func.apply(this, args);
+      memoized.cache = cache.set(key, result);
+      return result;
+    };
+    memoized.cache = new (memoize.Cache || MapCache)();
+    return memoized;
+  }
+  memoize.Cache = MapCache;
+  function eq(value, other2) {
+    return value === other2 || value !== value && other2 !== other2;
+  }
+  function isArguments(value) {
+    return isArrayLikeObject(value) && hasOwnProperty.call(value, "callee") && (!propertyIsEnumerable.call(value, "callee") || objectToString.call(value) == argsTag);
+  }
+  var isArray = Array.isArray;
+  function isArrayLike(value) {
+    return value != null && isLength(value.length) && !isFunction(value);
+  }
+  function isArrayLikeObject(value) {
+    return isObjectLike(value) && isArrayLike(value);
+  }
+  function isFunction(value) {
+    var tag = isObject(value) ? objectToString.call(value) : "";
+    return tag == funcTag || tag == genTag;
+  }
+  function isLength(value) {
+    return typeof value == "number" && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+  }
+  function isObject(value) {
+    var type = typeof value;
+    return !!value && (type == "object" || type == "function");
+  }
+  function isObjectLike(value) {
+    return !!value && typeof value == "object";
+  }
+  function isSymbol(value) {
+    return typeof value == "symbol" || isObjectLike(value) && objectToString.call(value) == symbolTag;
+  }
+  var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+  function toString(value) {
+    return value == null ? "" : baseToString(value);
+  }
+  function get(object, path, defaultValue) {
+    var result = object == null ? void 0 : baseGet(object, path);
+    return result === void 0 ? defaultValue : result;
+  }
+  function hasIn(object, path) {
+    return object != null && hasPath(object, path, baseHasIn);
+  }
+  function keys(object) {
+    return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+  }
+  function identity(value) {
+    return value;
+  }
+  function property(path) {
+    return isKey(path) ? baseProperty(toKey(path)) : basePropertyDeep(path);
+  }
+  module.exports = map2;
+})(lodash_map, lodash_map.exports);
+const map = lodash_map.exports;
+async function loader$1() {
+  const arry = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const data2 = map(arry, () => null);
+  console.log(data2);
   return {
-    props: "hello"
+    props: "about me! hehe hehe"
   };
 }
-function index$1({
-  props
-}) {
+const config$1 = {
+  cache: true
+};
+function index$1() {
+  const data2 = useLoader();
   return /* @__PURE__ */ jsxs("div", {
-    children: ["about ", props, " ", /* @__PURE__ */ jsx(Link, {
+    children: ["about: ", data2 == null ? void 0 : data2.props, "  ", /* @__PURE__ */ jsx(Link, {
       to: "/",
       children: "home"
     })]
   });
 }
-const __vite_glob_1_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_0$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  middleware: middleware$1,
+  loader: loader$1,
+  config: config$1,
   default: index$1
 }, Symbol.toStringTag, { value: "Module" }));
-function middleware() {
+function loader() {
   return {
-    props: "INDEX PAGE"
+    props: "HOME PAGE"
   };
 }
+const config = {
+  cache: true
+};
 function index() {
+  const data2 = useLoader();
   return /* @__PURE__ */ jsxs("div", {
     children: ["home ", /* @__PURE__ */ jsx(Link, {
       to: "/about",
       children: "about"
+    }), /* @__PURE__ */ jsxs("div", {
+      children: ["LOADER PROPS: ", data2 == null ? void 0 : data2.props]
     })]
   });
 }
-const __vite_glob_1_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  middleware,
+  loader,
+  config,
   default: index
 }, Symbol.toStringTag, { value: "Module" }));
 function _app({
@@ -968,7 +1806,7 @@ const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.def
   default: _app
 }, Symbol.toStringTag, { value: "Module" }));
 const PRESERVED = Object.assign({ "/src/routes/_app.tsx": __vite_glob_0_0 });
-const ROUTES = Object.assign({ "/src/routes/about/index.tsx": () => Promise.resolve().then(() => __vite_glob_1_0), "/src/routes/index.tsx": () => Promise.resolve().then(() => __vite_glob_1_1) });
+const ROUTES$1 = Object.assign({ "/src/routes/about/index.tsx": () => Promise.resolve().then(() => __vite_glob_0_0$1), "/src/routes/index.tsx": () => Promise.resolve().then(() => __vite_glob_0_1) });
 const preserved = Object.keys(PRESERVED).reduce((preserved2, file) => {
   const key = file.replace(/\/src\/routes\/|\.tsx$/g, "");
   return {
@@ -976,17 +1814,17 @@ const preserved = Object.keys(PRESERVED).reduce((preserved2, file) => {
     [key]: PRESERVED[file].default
   };
 }, {});
-const routes = Object.keys(ROUTES).map((route) => {
+const routes = Object.keys(ROUTES$1).map((route) => {
   const path = route.replace(/\/src\/routes|index|\.tsx$/g, "").replace(/\[\.{3}.+\]/, "*").replace(/\[(.+)\]/, ":$1");
   return {
     path,
-    component: react.exports.lazy(ROUTES[route])
+    component: react.exports.lazy(ROUTES$1[route])
   };
 });
-const routeMap = /* @__PURE__ */ new Map();
-Object.keys(ROUTES).map((route) => {
+const routeMap$1 = /* @__PURE__ */ new Map();
+Object.keys(ROUTES$1).map((route) => {
   const path = route.replace(/\/src\/routes|index|\.tsx$/g, "").replace(/\[\.{3}.+\]/, "*").replace(/\[(.+)\]/, ":$1");
-  ROUTES[route]().then((module) => module.middleware).then((middleware2) => routeMap.set(path, middleware2));
+  ROUTES$1[route]().then((module) => module.middleware).then((middleware) => routeMap$1.set(path, middleware));
 });
 function Main() {
   const App = (preserved == null ? void 0 : preserved["_app"]) || react.exports.Fragment;
@@ -4254,12 +5092,13 @@ l.renderToStaticNodeStream;
 var renderToReadableStream = s.renderToReadableStream;
 function HTML({
   children,
-  head: head2
+  head: head2,
+  sheath
 }) {
   return /* @__PURE__ */ jsxs("html", {
     children: [/* @__PURE__ */ jsx("head", {
       dangerouslySetInnerHTML: {
-        __html: head2
+        __html: head2 + `<script>window.sheath = ${JSON.stringify(sheath)}<\/script>`
       }
     }), /* @__PURE__ */ jsxs("body", {
       children: [/* @__PURE__ */ jsx("noscript", {
@@ -4315,22 +5154,25 @@ function StaticRouter({
     static: true
   });
 }
-async function renderInWorker({
-  head: head2,
-  req
-}) {
-  const ROUTES2 = Object.assign({ "/src/routes/about/index.tsx": __vite_glob_1_0, "/src/routes/index.tsx": __vite_glob_1_1 });
-  const routeMap2 = /* @__PURE__ */ new Map();
-  Object.keys(ROUTES2).map((route) => {
-    let path = route.replace(/\/src\/routes|index|\.tsx$/g, "").replace(/\[\.{3}.+\]/, "*").replace(/\[(.+)\]/, ":$1");
-    if (path.length > 1 && path.lastIndexOf("/") === path.length - 1) {
-      path = path.substring(0, path.length - 1);
-    }
-    routeMap2.set(path, ROUTES2[route].middleware);
+const ROUTES = Object.assign({ "/src/routes/about/index.tsx": __vite_glob_0_0$1, "/src/routes/index.tsx": __vite_glob_0_1 });
+const routeMap = /* @__PURE__ */ new Map();
+Object.keys(ROUTES).map((route) => {
+  let path = route.replace(/\/src\/routes|index|\.tsx$/g, "").replace(/\[\.{3}.+\]/, "*").replace(/\[(.+)\]/, ":$1");
+  if (path.length > 1 && path.lastIndexOf("/") === path.length - 1) {
+    path = path.substring(0, path.length - 1);
+  }
+  routeMap.set(path, {
+    loader: ROUTES[route].loader,
+    config: ROUTES[route].config
   });
-  const middleware2 = routeMap2.get(new URL(req.url).pathname);
-  const edgeProps = await (middleware2 == null ? void 0 : middleware2());
-  console.log(edgeProps);
+});
+async function renderInWorker({
+  req,
+  head: head2
+}) {
+  var _a;
+  const routeParams = routeMap.get(new URL(req.url));
+  await ((_a = routeParams == null ? void 0 : routeParams.loader) == null ? void 0 : _a.call(routeParams));
   try {
     const stream = await renderToReadableStream(/* @__PURE__ */ jsx(HTML, {
       head: head2,
@@ -4353,7 +5195,7 @@ async function renderInWorker({
     });
   }
 }
-const template = '<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8" />\n    <link rel="icon" type="image/svg+xml" href="/vite.svg" />\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    <title>Vite + React + TS</title>\n    <script type="module" crossorigin src="/assets/index.518ca478.js"><\/script>\n  </head>\n  <body>\n    <div id="root"></div>\n    \n  </body>\n</html>';
+const template = '<!DOCTYPE html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8" />\n    <link rel="icon" type="image/svg+xml" href="/vite.svg" />\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    <title>Vite + React + TS</title>\n    <script type="module" crossorigin src="/assets/index.dd94d48a.js"><\/script>\n  </head>\n  <body>\n    <div id="root"></div>\n    \n  </body>\n</html>';
 var dist = {};
 function Mime$1() {
   this._types = /* @__PURE__ */ Object.create(null);
