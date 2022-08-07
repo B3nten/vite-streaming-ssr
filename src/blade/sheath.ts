@@ -5,6 +5,7 @@ const sheath = (cache: Cache) => {
 		__sheath = new Map()
 	} else {
 		__sheath = self.__sheath
+		console.log(__sheath)
 	}
 	if (__sheath instanceof Array) return new Map(__sheath)
 	if (cache instanceof Map) return cache

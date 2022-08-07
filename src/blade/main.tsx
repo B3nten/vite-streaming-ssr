@@ -41,11 +41,10 @@ const options = cache => ({
 export function Main({ cache }: { cache?: Cache }) {
 	const App = preserved?.['_app'] || Fragment
 	const NotFound = preserved?.['404'] || Fragment
-
 	return (
 		<App>
 			<SWRConfig value={{ provider: () => sheath(cache) }}>
-				<Suspense fallback={null}>
+				<Suspense fallback={<div>loading...</div>}>
 					<BrowserRoutes>
 						{routes.map(({ path, component: Component = Fragment }) => (
 							<Route
